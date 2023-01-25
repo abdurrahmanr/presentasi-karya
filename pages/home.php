@@ -1,11 +1,15 @@
+<?php 
+session_start();
+?>
+
 <div class="w-full flex flex-col">
     <div class="w-full pt-12 px-12">
         <div class="flex items-center justify-between">
             <p class="title text-2xl font-bold font">Beranda</p>
             <div id="profile" class="cursor-pointer flex items-center gap-5 justify-end">
                 <div class="leading-tight">
-                    <p class="font-bold">Abdurrahman Rahim</p>
-                    <p>Mahasiswa</p>
+                    <p class="font-bold"><?= $_SESSION['username'] ?></p>
+                    <p><?= $_SESSION['role'] ?></p>
                 </div>
                 <img class="w-12 h-12 rounded-2xl" src="../assets/img/profile.png" alt="">
             </div>
@@ -21,7 +25,7 @@
             <?php include '../components/card.php' ?>
         </div>
     </div>
-    <div class="w-1/2 h-full pt-12 pr-12 relative">
+    <div class="w-1/2 h-full pt-12 pr-12 pl-12 relative">
 
         <!-- <div class="flex items-center justify-between">
             <p class="title text-2xl font-bold font">Tugas Mendatang</p>

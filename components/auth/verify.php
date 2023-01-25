@@ -1,11 +1,11 @@
 <?php
-$login = 0;
+
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
     $password = $_POST['password'];
     $results = select("SELECT * FROM accounts WHERE account_name = '$name'");
     if ($results) {
-        foreach ($results as $result):
+        foreach ($results as $result) :
             if ($password == $result['password']) {
                 if ($result['role'] == "admin") {
                     session_start();
@@ -15,28 +15,41 @@ if (isset($_POST['name'])) {
                 } else if ($result['role'] == "class lead") {
                     session_start();
                     $_SESSION['username'] = $result['account_name'];
-                    $_SESSION['role'] = $result['role'];
-                    header("Location: /components/dynamic/user.php");
+                    $_SESSION['role'] = "Ketua Tingkat";
+                    header("Location: /pages/user.php");
                 } else if ($result['role'] == "student") {
                     session_start();
                     $_SESSION['username'] = $result['account_name'];
-                    $_SESSION['role'] = $result['role'];
-                    header("Location: /components/dynamic/user.php");
+                    $_SESSION['role'] = "Mahasiswa";
+                    header("Location: /pages/user.php");
                 }
             } else {
                 echo "<script>Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Wrong Password!'
+                    confirmButtonColor: '#000',
+                    showClass: {
+                        popup: 'animate__animated animate__headShake'
+                    },
+                    text: 'Password salah!'
                 });</script>";
             }
         endforeach;
     } else {
         echo "<script>Swal.fire({
-            icon: 'error',
+            icon: 'question',
             title: 'Oops...',
-            text: 'Account Not Found!'
+            confirmButtonText: 'Buat Akun',
+            showCancelButton: true,
+            confirmButtonColor: '#000',
+            showClass: {
+                popup: 'animate__animated animate__headShake'
+            },
+            text: 'Akun tidak ditemukan!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#form-container').load('/components/auth/register.php');
+            }
         });</script>";
     }
 }
-?>

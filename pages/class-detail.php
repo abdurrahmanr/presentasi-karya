@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+include '../controller/controller.php';
+
+if (isset($_POST['task'])) {
+    if (create($_POST) > 0) {
+        echo "<script>
+        Swal.fire(
+            'Good job!',
+            'Tugas berhasil ditambahkan!',
+            'success'
+          )
+        </script>";
+    } else {
+        echo "gagal";
+    }
+}
+
+if (isset($_POST['deleteId'])) {
+    if (deleteData($_POST['deleteId']) > 0) {
+        echo "<script>
+        Swal.fire(
+            'Good job!',
+            'Tugas berhasil dihapus!',
+            'success'
+          )
+        </script>";
+    } else {
+        echo "gagal";
+    }
+}
+
+$result = select("SELECT * FROM tasks");
+?>
+
 <div class="w-full flex">
     <div class="w-full h-fit rounded-l-2xl bg-[#fafafa] pt-12 pl-12 pr-12">
         <div class="flex items-center justify-between h-12">
@@ -8,25 +44,30 @@
             </div>
             <div id="profile" class="cursor-pointer flex items-center gap-5 justify-end">
                 <div class="leading-tight">
-                    <p class="font-bold">Abdurrahman Rahim</p>
-                    <p>Mahasiswa</p>
+                    <p class="font-bold"><?= $_SESSION['username'] ?></p>
+                    <p><?= $_SESSION['role'] ?></p>
                 </div>
                 <img class="w-12 h-12 rounded-2xl" src="../assets/img/profile.png" alt="">
             </div>
         </div>
 
         <div class="flex pt-10 pb-10">
-            <div class="flex flex-col w-3/4">
-                <ul class="selection flex gap-5 text-base relative w-fit">
-                    <div id="marker"></div>
-                    <li class="selected cursor-pointer" data-id="1">Diberikan</li>
-                    <li class="cursor-pointer" data-id="2">Selesai</li>
-                </ul>
+            <div class="flex flex-col w-2/4">
+                <div class="flex items-center justify-between">
+                    <ul class="selection flex gap-5 text-base relative w-fit">
+                        <div id="marker"></div>
+                        <li class="selected cursor-pointer" data-id="1">Diberikan</li>
+                        <li class="cursor-pointer" data-id="2">Selesai</li>
+                    </ul>
+                    <p id="add-task" class="py-1 px-2 rounded-xl text-white bg-[#14121e]">Tambah</p>
+                </div>
                 <div class="tab pt-10">
                     <div class="tab-content active flex flex-col gap-4" data-content="1">
-                        <?php include '../components/task-detail.php' ?>
-                        <?php include '../components/task-detail.php' ?>
-                        <?php include '../components/task-detail.php' ?>
+                        <?php
+                        foreach ($result as $res) {
+                            include '../components/task-detail.php';
+                        }
+                        ?>
                     </div>
                     <div class="tab-content flex flex-col gap-4" data-content="2">
                         <?php include '../components/task-detail.php' ?>
@@ -34,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="pt-10">
+            <div class="pt-10 w-1/2 flex flex-col items-center">
                 <p class="font-bold">Deskripsi Kelas</p>
                 <p>Pengajar: Nama</p>
                 <p>Jumlah Siswa: 12</p>

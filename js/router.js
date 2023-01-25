@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#main").load("../pages/user.php")
+    $("#main").load("/pages/auth.php")
 });
 
 $(document).on("click", ".sidebar-menu, .logout", function (e) {
@@ -75,6 +75,54 @@ $(document).ready(function () {
             $(".accordion-head span").text("expand_more");
             $(this).next(".accordion-body").addClass("active").slideDown();
             $(this).children("span").text("expand_less");
+        }
+    });
+});
+
+$(document).on("submit", "#form", function (e) {
+    e.preventDefault();
+    $name = $("input[placeholder=username]").val();
+    $password = $("input[placeholder=password]").val();
+    $.post("/pages/auth.php", {
+        name: $name,
+        password: $password,
+    }).done(function (data) {
+        // $("nav").show();
+        // $("nav").css("width", "");
+        // $("#main").css("margin-left", "");
+        $("#main").html(data);
+    });
+});
+
+$(document).on("click", "#add-task", function (e) {
+    Swal.fire({
+        html: "<input id='input-add' placeholder='name' required>"
+    }).then(function () {
+        $.post("pages/class-detail.php", {
+            task: $("input[placeholder=name]").val()
+        }).done(function (data) {
+            $("#content").html(data);
+        })
+    });
+});
+
+$(document).on("click", "#delete-task", function (e) {
+    var deleteId = $(this).data("id");
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post("pages/class-detail.php", {
+                deleteId: deleteId
+            }).done(function (data) {
+                $("#content").html(data);
+            })
         }
     });
 });

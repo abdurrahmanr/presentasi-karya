@@ -26,4 +26,13 @@ function create($data)
     return mysqli_affected_rows($db);
 }
 
-?>
+function deleteData($id)
+{
+    global $db;
+
+    $query = "DELETE FROM tasks WHERE task_id = $id";
+
+    mysqli_query($db, $query);
+
+    return mysqli_affected_rows($db);
+}
