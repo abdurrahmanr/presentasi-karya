@@ -11,7 +11,7 @@ if (isset($_POST['name'])) {
                     session_start();
                     $_SESSION['username'] = $result['account_name'];
                     $_SESSION['role'] = $result['role'];
-                    header("Location: /admin/dashboard.php");
+                    header("Location: /pages/admin/dashboard.php");
                 } else if ($result['role'] == "class lead") {
                     session_start();
                     $_SESSION['username'] = $result['account_name'];

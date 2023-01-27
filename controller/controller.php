@@ -36,3 +36,14 @@ function deleteData($id)
 
     return mysqli_affected_rows($db);
 }
+
+function checkTask($id)
+{
+    global $db;
+
+    $query = "UPDATE tasks SET `status` = '1' WHERE task_id = $id";
+
+    mysqli_query($db, $query);
+
+    return mysqli_affected_rows($db);
+}

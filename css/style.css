@@ -138,7 +138,7 @@ table {
   border-spacing: 0;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 0;
 }
 
@@ -190,7 +190,7 @@ table {
   background-color: #fff;
 }
 
-.active > a > p {
+.active>a>p {
   color: #fff;
 }
 
@@ -240,6 +240,6 @@ i {
   font-weight: 700;
 }
 
-.tab-content:not(.active) {
+.tab-content:not(.active-tab) {
   display: none;
 }

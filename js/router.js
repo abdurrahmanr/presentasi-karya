@@ -49,12 +49,13 @@ $(document).on("click", "#card", function () {
 
 $(document).on("click", ".selection li", function () {
     const id = $(this).data('id');
-    if (!$(this).hasClass('active')) {
-        $(".selection li").removeClass('active');
-        $(this).addClass('active');
+    if (!$(this).hasClass('active-tab')) {
+        $(".selection li").removeClass('active-tab');
+        $(this).addClass('active-tab');
 
         $('.tab-content').hide();
         $(`[data-content=${id}]`).fadeIn();
+        $(`[data-content=${id}]`).css("display", "flex");
     }
 });
 
@@ -124,5 +125,15 @@ $(document).on("click", "#delete-task", function (e) {
                 $("#content").html(data);
             })
         }
+    });
+});
+
+$(document).on("click", "#button-status", function () {
+    $id = $(this).data("status");
+    // alert($id);
+    $.post("pages/class-detail.php", {
+        checkId: $id,
+    }).done(function (data) {
+        $("#content").html(data);
     });
 });

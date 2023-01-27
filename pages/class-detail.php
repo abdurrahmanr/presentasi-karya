@@ -31,7 +31,14 @@ if (isset($_POST['deleteId'])) {
     }
 }
 
-$result = select("SELECT * FROM tasks");
+if (isset($_POST['checkId'])) {
+    if (checkTask($_POST['checkId']) > 0) {
+        echo 'checked';
+    }
+}
+
+$assigned = select("SELECT * FROM tasks WHERE `status` = '0'");
+$completed = select("SELECT * FROM tasks WHERE `status` = '1'");
 ?>
 
 <div class="w-full flex">
@@ -62,23 +69,31 @@ $result = select("SELECT * FROM tasks");
                     <p id="add-task" class="py-1 px-2 rounded-xl text-white bg-[#14121e]">Tambah</p>
                 </div>
                 <div class="tab pt-10">
-                    <div class="tab-content active flex flex-col gap-4" data-content="1">
+                    <div class="tab-content active-tab flex flex-col gap-4" data-content="1">
                         <?php
-                        foreach ($result as $res) {
+                        foreach ($assigned as $res) {
                             include '../components/task-detail.php';
                         }
                         ?>
                     </div>
                     <div class="tab-content flex flex-col gap-4" data-content="2">
-                        <?php include '../components/task-detail.php' ?>
+                        <?php
+                        foreach ($completed as $res) {
+                            include '../components/task-detail.php';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
 
             <div class="pt-10 w-1/2 flex flex-col items-center">
-                <p class="font-bold">Deskripsi Kelas</p>
-                <p>Pengajar: Nama</p>
-                <p>Jumlah Siswa: 12</p>
+                <div class="w-5/6 bg-[#f4f5f6] rounded-xl">
+                    <div class="pl-10 py-10 w-full">
+                        <p class="font-bold">Deskripsi Kelas</p>
+                        <p>Pengajar : Nama</p>
+                        <p>Jumlah Siswa : 12</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
