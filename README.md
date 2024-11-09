@@ -1,6 +1,6 @@
 # Learning Management System (LMS)
 
-This web-based LMS allows students to access syllabi, schedules, and class details in a smooth single-page experience. Developed as part of for entry into **Inready Workgroup**, an IT organization. This project highlights skills in front-end and back-end development, and SPA architecture.
+This web-based LMS allows students to access syllabi, schedules, and class details in a smooth single-page experience. Developed as part of for my application to join **@Inready-Workgroup-Devs**, an IT organization. This project highlights skills in front-end and back-end development, and SPA architecture.
 
 ## Features
 
